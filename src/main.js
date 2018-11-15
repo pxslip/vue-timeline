@@ -1,8 +1,5 @@
-import Vue from "vue";
-import App from "./App.vue";
+import VueAgile from "vue-agile";
 
-Vue.config.productionTip = false;
-
-new Vue({
-  render: h => h(App)
-}).$mount("#app");
+export default function install(Vue) {
+  Vue.use(VueAgile);
+}
