@@ -1,5 +1,10 @@
-import VueAgile from "vue-agile";
+import Vue from 'vue';
+import VueTimeline from './vue-timeline';
+import App from './components/App';
 
-export default function install(Vue) {
-  Vue.use(VueAgile);
-}
+Vue.use(VueTimeline);
+
+new Vue({
+  el: '#app',
+  render: h => h(App),
+});
