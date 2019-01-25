@@ -7,8 +7,13 @@ import slides from '../assets/slides';
 export default {
   data() {
     return {
-      slides,
+      slides: [],
     };
+  },
+  created() {
+    setTimeout(() => {
+      this.slides = slides;
+    }, 500);
   },
 };
 </script>
