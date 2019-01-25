@@ -1,9 +1,9 @@
 <template>
   <div class="vt">
-    <agile ref="nav" class="vt__nav" :dots="false" :slidesToShow="8" :infinite="false" :unagile="disable" :responsive="navResponsive" @agile:settingSlide="navSettingSlide" @agile:setSlide="navSetSlide">
+    <agile ref="nav" class="vt__nav" v-if="hasSlides" :dots="false" :slidesToShow="8" :infinite="false" :unagile="disable" :options="navOptions" @agile:settingSlide="navSettingSlide" @agile:setSlide="navSetSlide">
       <div v-for="(slide, index) in slides" :key="slide.id" @click="navigateBothToSlide(index)">{{ slide.date }}</div>
     </agile>
-    <agile ref="timeline" :dots="false" :infinite="false" :unagile="disable" class="vt__timeline vt-timeline" @agile:settingSlide="timelineSettingSlide" @agile:setSlide="timelineSetSlide">
+    <agile ref="timeline" class="vt__timeline vt-timeline" v-if="hasSlides" :dots="false" :infinite="false" :unagile="disable" @agile:settingSlide="timelineSettingSlide" @agile:setSlide="timelineSetSlide">
       <div v-for="slide in slides" :key="slide.id" class="vt-timeline__slide vt-slide">
           <h3 class="vt-slide__date">{{ slide.date }}</h3>
           <h2 class="vt-slide__title">{{ slide.title }}</h2>
@@ -26,36 +26,43 @@ export default {
       navTransitioning: false,
       timelineTransitioning: false,
       disable: false,
-      navResponsive: [
-        {
-          breakpoint: 992,
-          settings: {
-            slidesToShow: 4,
+      navOptions: {
+        responsive: [
+          {
+            breakpoint: 992,
+            settings: {
+              slidesToShow: 4,
+            },
           },
-        },
-        {
-          breakpoint: 768,
-          settings: {
-            slidesToShow: 2,
+          {
+            breakpoint: 768,
+            settings: {
+              slidesToShow: 2,
+            },
           },
-        },
-        {
-          breakpoint: 576,
-          settings: {
-            slidesToShow: 1,
+          {
+            breakpoint: 576,
+            settings: {
+              slidesToShow: 1,
+            },
           },
-        },
-      ],
+        ],
+      },
     };
+  },
+  computed: {
+    hasSlides() {
+      return this.slides.length > 0;
+    },
   },
   mounted() {
     // force the agile slides to reload, hopefully recalculating widths
-    window.setTimeout(() => {
-      this.$refs.nav.getWidth();
-      this.$refs.nav.reload();
-      this.$refs.timeline.getWidth();
-      this.$refs.timeline.reload();
-    }, 100);
+    // window.setTimeout(() => {
+    //   this.$refs.nav.getWidth();
+    //   this.$refs.nav.reload();
+    //   this.$refs.timeline.getWidth();
+    //   this.$refs.timeline.reload();
+    // }, 100);
   },
   methods: {
     navigateBothToSlide(index) {
