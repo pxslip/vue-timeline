@@ -1,6 +1,6 @@
 {
   "name": "vue-timeline-slider",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "private": false,
   "repository": {
     "type": "git",
@@ -12,6 +12,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:lib": "vue-cli-service build --target lib --name vue-timeline src/vue-timeline.js",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
   },
