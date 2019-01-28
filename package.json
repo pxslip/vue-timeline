@@ -8,6 +8,7 @@
   },
   "author": "Will Kruse <wskruse@gmail.com>",
   "main": "dist/vue-timeline.umd.min.js",
+  "module": "dist/vue-timeline.common.js",
   "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
