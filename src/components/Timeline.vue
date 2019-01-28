@@ -1,13 +1,15 @@
 <template>
   <div class="vt">
     <agile ref="nav" class="vt__nav" v-if="hasSlides" :dots="false" :slidesToShow="8" :infinite="false" :unagile="disable" :options="navOptions" @agile:settingSlide="navSettingSlide" @agile:setSlide="navSetSlide">
-      <div v-for="(slide, index) in slides" :key="slide.id" @click="navigateBothToSlide(index)">{{ slide.date }}</div>
+      <div v-for="(slide, index) in slides" :key="`nav-slide_${index}`" @click="navigateBothToSlide(index)">{{ slide.date }}</div>
     </agile>
     <agile ref="timeline" class="vt__timeline vt-timeline" v-if="hasSlides" :dots="false" :infinite="false" :unagile="disable" @agile:settingSlide="timelineSettingSlide" @agile:setSlide="timelineSetSlide">
-      <div v-for="slide in slides" :key="slide.id" class="vt-timeline__slide vt-slide">
-          <h3 class="vt-slide__date">{{ slide.date }}</h3>
-          <h2 class="vt-slide__title">{{ slide.title }}</h2>
-          <div class="vt-slide__content" v-html="slide.content"></div>
+      <div v-for="(slide, index) in slides" :key="`timeline-slide_${index}`" class="vt-timeline__slide vt-slide">
+          <slot v-bind:slide="slide">
+            <h3 class="vt-slide__date">{{ slide.date }}</h3>
+            <h2 class="vt-slide__title">{{ slide.title }}</h2>
+            <div class="vt-slide__content" v-html="slide.content"></div>
+          </slot>
       </div>
     </agile>
   </div>
