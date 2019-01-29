@@ -65,6 +65,7 @@ export default {
     return {
       navTransitioning: false,
       timelineTransitioning: false,
+      currentSlide: 1,
       navOptions: {
         responsive: [
           {
@@ -99,17 +100,9 @@ export default {
     this.setResponsiveNavOptions();
     this.setNavArrows();
   },
-  mounted() {
-    // force the agile slides to reload, hopefully recalculating widths
-    // window.setTimeout(() => {
-    //   this.$refs.nav.getWidth();
-    //   this.$refs.nav.reload();
-    //   this.$refs.timeline.getWidth();
-    //   this.$refs.timeline.reload();
-    // }, 100);
-  },
   methods: {
     navigateBothToSlide(index) {
+      this.currentSlide = index + 1;
       if (!this.navTransitioning) {
         this.$refs.nav.setSlide(index);
       }
@@ -121,6 +114,7 @@ export default {
       this.navTransitioning = true;
     },
     navSetSlide(index) {
+      this.currentSlide = index + 1;
       if (!this.timelineTransitioning) {
         this.$refs.timeline.setSlide(index);
       }
@@ -130,6 +124,7 @@ export default {
       this.timelineTransitioning = true;
     },
     timelineSetSlide(index) {
+      this.currentSlide = index + 1;
       if (!this.navTransitioning) {
         this.$refs.nav.setSlide(index);
       }
@@ -153,6 +148,14 @@ export default {
       if (this.navArrows.nextArrow) {
         this.navOptions.nextArrow = this.navArrows.nextArrow;
       }
+    },
+  },
+  watch: {
+    responsiveNavOptions(newOptions) {
+      this.setResponsiveNavOptions(newOptions);
+    },
+    navArrows(newArrows) {
+      this.setNavArrows(newArrows);
     },
   },
 };
