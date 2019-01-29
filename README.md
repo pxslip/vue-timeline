@@ -31,7 +31,11 @@ Vue.component('vue-timeline', VueTimelineComponent);
 
 ## Usage ##
 
-The only prop currently available is `slides` which should be set to an array of objects representing each slides that should be shown. To use the default template the objects must also contain a `title`, `content`, and `date` property:
+### Props ###
+
+- `slides`
+
+The `slides` prop is used to set the array of objects representing each slide. The objects contained within the array should be of the form:
 
 ```json
 [
@@ -42,6 +46,43 @@ The only prop currently available is `slides` which should be set to an array of
     },
     ...
 ]
+```
+
+- `navSlidesToShow`
+
+An integer indicating the default number of options to show in the navigation slider. This value can also be set using the `responsiveNavOptions` by setting the `slidesToShow` in the options object for each breakpoint.
+
+- `loopTimeline`
+
+A boolean indicating whether the timeline should wrap back around to the start upon passing the last slide.
+
+- `timelineDots`
+
+A boolean indicating whether dots should be shown for the timeline slider
+
+- `responsiveNavOptions`
+
+An object that can be used to set responsive options for the nav slider. Should be of the form:
+
+```json
+{
+  "720": {
+    "slidesToShow": 2,
+    ...
+  },
+  ...
+}
+```
+
+- `navArrows`
+
+Sets the html for the arrows shown on the navigation slider. Should be an object of the form:
+
+```json
+{
+  "prevArrow": "<i class=\"fa fa-caret-left\"></i>",
+  "nextArrow": "<i class=\"fa fa-caret-right\"></i>"
+}
 ```
 
 The component exposes the contents of each slide in the timeline as a slot, with the slide data bound to the slot scope as `slide` allowing you to customize the appearance of the slide.
