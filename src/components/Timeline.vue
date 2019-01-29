@@ -157,6 +157,9 @@ export default {
     navArrows(newArrows) {
       this.setNavArrows(newArrows);
     },
+    currentSlide(newIndex) {
+      this.$emit('slideChanged', newIndex);
+    },
   },
 };
 </script>
