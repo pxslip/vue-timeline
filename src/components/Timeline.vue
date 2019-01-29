@@ -23,7 +23,7 @@
       @agile:setSlide="timelineSetSlide"
     >
       <div v-for="(slide, index) in slides" :key="`timeline-slide_${index}`" class="vt-timeline__slide vt-slide">
-          <slot v-bind:slide="slide">
+          <slot v-bind:slide="slide" v-bind:index="index">
             <h3 class="vt-slide__date">{{ slide.date }}</h3>
             <h2 class="vt-slide__title">{{ slide.title }}</h2>
             <div class="vt-slide__content" v-html="slide.content"></div>
@@ -102,7 +102,7 @@ export default {
   },
   methods: {
     navigateBothToSlide(index) {
-      this.currentSlide = index + 1;
+      this.currentSlide = index;
       if (!this.navTransitioning) {
         this.$refs.nav.setSlide(index);
       }
@@ -114,7 +114,7 @@ export default {
       this.navTransitioning = true;
     },
     navSetSlide(index) {
-      this.currentSlide = index + 1;
+      this.currentSlide = index;
       if (!this.timelineTransitioning) {
         this.$refs.timeline.setSlide(index);
       }
@@ -124,7 +124,7 @@ export default {
       this.timelineTransitioning = true;
     },
     timelineSetSlide(index) {
-      this.currentSlide = index + 1;
+      this.currentSlide = index;
       if (!this.navTransitioning) {
         this.$refs.nav.setSlide(index);
       }
