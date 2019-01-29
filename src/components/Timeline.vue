@@ -1,9 +1,27 @@
 <template>
   <div class="vt">
-    <agile ref="nav" class="vt__nav" v-if="hasSlides" :dots="false" :slidesToShow="8" :infinite="false" :unagile="disable" :options="navOptions" @agile:settingSlide="navSettingSlide" @agile:setSlide="navSetSlide">
+    <agile
+      ref="nav"
+      class="vt__nav"
+      v-if="hasSlides"
+      :dots="false"
+      :slidesToShow="navSlidesToShow"
+      :infinite="false"
+      :options="navOptions"
+      @agile:settingSlide="navSettingSlide"
+      @agile:setSlide="navSetSlide"
+    >
       <div v-for="(slide, index) in slides" :key="`nav-slide_${index}`" @click="navigateBothToSlide(index)">{{ slide.date }}</div>
     </agile>
-    <agile ref="timeline" class="vt__timeline vt-timeline" v-if="hasSlides" :dots="false" :infinite="false" :unagile="disable" @agile:settingSlide="timelineSettingSlide" @agile:setSlide="timelineSetSlide">
+    <agile
+      ref="timeline"
+      class="vt__timeline vt-timeline"
+      v-if="hasSlides"
+      :dots="timelineDots"
+      :infinite="loopTimeline"
+      @agile:settingSlide="timelineSettingSlide"
+      @agile:setSlide="timelineSetSlide"
+    >
       <div v-for="(slide, index) in slides" :key="`timeline-slide_${index}`" class="vt-timeline__slide vt-slide">
           <slot v-bind:slide="slide">
             <h3 class="vt-slide__date">{{ slide.date }}</h3>
@@ -22,12 +40,31 @@ export default {
       type: Array,
       required: true,
     },
+    navSlidesToShow: {
+      type: Number,
+      default: 4,
+    },
+    loopTimeline: {
+      type: Boolean,
+      default: false,
+    },
+    timelineDots: {
+      type: Boolean,
+      default: false,
+    },
+    responsiveNavOptions: {
+      type: Object,
+      default: () => {},
+    },
+    navArrows: {
+      type: Object,
+      default: () => {},
+    },
   },
   data() {
     return {
       navTransitioning: false,
       timelineTransitioning: false,
-      disable: false,
       navOptions: {
         responsive: [
           {
@@ -56,6 +93,11 @@ export default {
     hasSlides() {
       return this.slides.length > 0;
     },
+  },
+  created() {
+    // if we have the responsiveNavOptions prop map through it and set values as appropriate
+    this.setResponsiveNavOptions();
+    this.setNavArrows();
   },
   mounted() {
     // force the agile slides to reload, hopefully recalculating widths
@@ -92,6 +134,25 @@ export default {
         this.$refs.nav.setSlide(index);
       }
       this.timelineTransitioning = false;
+    },
+    setResponsiveNavOptions() {
+      const keys = Object.keys(this.responsiveNavOptions);
+      if (keys.length && this.responsiveNavOptions.constructor === Object) {
+        this.navOptions.responsive = keys.map(key => {
+          return {
+            breakpoint: key,
+            settings: this.responsiveNavOptions[key],
+          };
+        });
+      }
+    },
+    setNavArrows() {
+      if (this.responsiveNavOptions.prevArrow) {
+        this.navOptions.prevArrow = this.responsiveNavOptions.prevArrow;
+      }
+      if (this.responsiveNavOptions.nextArrow) {
+        this.navOptions.nextArrow = this.responsiveNavOptions.nextArrow;
+      }
     },
   },
 };
