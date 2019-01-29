@@ -147,11 +147,11 @@ export default {
       }
     },
     setNavArrows() {
-      if (this.responsiveNavOptions.prevArrow) {
-        this.navOptions.prevArrow = this.responsiveNavOptions.prevArrow;
+      if (this.navArrows.prevArrow) {
+        this.navOptions.prevArrow = this.navArrows.prevArrow;
       }
-      if (this.responsiveNavOptions.nextArrow) {
-        this.navOptions.nextArrow = this.responsiveNavOptions.nextArrow;
+      if (this.navArrows.nextArrow) {
+        this.navOptions.nextArrow = this.navArrows.nextArrow;
       }
     },
   },
