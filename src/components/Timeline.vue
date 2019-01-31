@@ -2,13 +2,12 @@
   <div class="vt">
     <agile
       ref="nav"
-      class="vt__nav"
-      v-if="hasSlides"
+      :class="['vt__nav', {'hidden': navDisabled}]"
+      v-if="hasSlides && !navDisabled"
       :dots="false"
       :slidesToShow="navSlidesToShow"
       :infinite="false"
       :options="navOptions"
-      :unagile="navDisabled"
       @agile:settingSlide="navSettingSlide"
       @agile:setSlide="navSetSlide"
     >
@@ -182,32 +181,44 @@ export default {
   }
 }
 
-.vt__nav /deep/ {
-  .agile {
-    &__list {
-      width: 90%;
-      margin-left: auto;
-      margin-right: auto;
-    }
+.vt__nav {
+  &.agile--disabled {
+    display: none;
+  }
 
-    &__arrow {
-      position: absolute;
-      top: 0;
-      height: 100%;
-      width: auto;
-
-      &--prev {
-        left: 0;
+  /deep/ {
+    .agile {
+      &__list {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
       }
 
-      &--next {
-        right: 0;
+      &__arrow {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: auto;
+
+        &--prev {
+          left: 0;
+        }
+
+        &--next {
+          right: 0;
+        }
+      }
+
+      &__slide {
+        cursor: pointer;
       }
     }
+  }
+}
 
-    &__slide {
-      cursor: pointer;
-    }
+.vt__timeline {
+  .agile__slide {
+    margin-bottom: 1%;
   }
 }
 </style>
