@@ -8,6 +8,7 @@
       :slidesToShow="navSlidesToShow"
       :infinite="false"
       :options="navOptions"
+      :unagile="navDisabled"
       @agile:settingSlide="navSettingSlide"
       @agile:setSlide="navSetSlide"
     >
@@ -19,6 +20,7 @@
       v-if="hasSlides"
       :dots="timelineDots"
       :infinite="loopTimeline"
+      :unagile="timelineDisabled"
       @agile:settingSlide="timelineSettingSlide"
       @agile:setSlide="timelineSetSlide"
     >
@@ -59,6 +61,14 @@ export default {
     navArrows: {
       type: Object,
       default: () => {},
+    },
+    navDisabled: {
+      type: Boolean,
+      default: false,
+    },
+    timelineDisabled: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
